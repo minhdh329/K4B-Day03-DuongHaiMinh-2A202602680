@@ -1,29 +1,127 @@
 [
   {
     "step": 1,
-    "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "query": "Chào bạn, bạn có thể giới thiệu quy trình tuyển dụng cơ bản của công ty không?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Chào bạn! Rất vui được hỗ trợ bạn. Quy trình tuyển dụng cơ bản tại công ty chúng tôi thường bao gồm các bước chính sau đây:\n\n1.  **Tiếp nhận và Sàng lọc hồ sơ:** Bộ phận tuyển dụng sẽ xem xét CV của ứng viên để đảm bảo phù hợp với các yêu cầu chuyên môn của vị trí.\n2.  **Phỏng vấn sơ bộ (Screening Call):** Một cuộc trao đổi ngắn qua điện thoại hoặc trực tuyến để xác định sự phù hợp về văn hóa, kỳ vọng lương và thời gian làm việc.\n3.  **Phỏng vấn chuyên môn:** Ứng viên sẽ trao đổi trực tiếp với quản lý bộ phận hoặc các chuyên gia trong lĩnh vực để đánh giá kỹ năng, kinh nghiệm và khả năng giải quyết vấn đề.\n4.  **Phỏng vấn cuối (nếu có):** Gặp gỡ lãnh đạo cấp cao hoặc bộ phận nhân sự để chốt các điều khoản cuối cùng.\n5.  **Gửi thư mời nhận việc (Offer Letter):** Sau khi đạt yêu cầu, công ty sẽ gửi thư mời làm việc chính thức.\n6.  **Onboarding:** Hướng dẫn hội nhập và bắt đầu công việc.\n\nNếu bạn đang quan tâm đến một vị trí cụ thể nào đó, hãy cho tôi biết tên vị trí, tôi có thể giúp bạn tra cứu các yêu cầu chi tiết (JD) hoặc hỗ trợ đặt lịch phỏng vấn nếu bạn đã sẵn sàng!",
+    "latency_ms": 4461.85
   },
   {
     "step": 1,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tra cứu các tiêu chí tuyển dụng cho vị trí Frontend Developer.",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "tool_name": "get_job_criteria",
     "arguments": {
-      "student_id": "SV2026001"
+      "job_title": "Frontend Developer"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "job_title": "Frontend Developer",
+      "data": {
+        "department": "Engineering",
+        "level": "Mid-Senior",
+        "skills_required": [
+          "ReactJS",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "experience": "2+ years",
+        "salary_range": "1500 - 2500 USD"
+      }
+    },
+    "latency_ms": 4806.65
   },
   {
     "step": 2,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tra cứu các tiêu chí tuyển dụng cho vị trí Frontend Developer.",
     "action_type": "FINAL_ANSWER",
     "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
+    "output": "Dữ liệu trả về: {\"department\": \"Engineering\", \"level\": \"Mid-Senior\", \"skills_required\": [\"ReactJS\", \"TypeScript\", \"Tailwind CSS\"], \"experience\": \"2+ years\", \"salary_range\": \"1500 - 2500 USD\"}",
+    "latency_ms": 10.0
+  },
+  {
+    "step": 1,
+    "query": "Tôi muốn đặt lịch phỏng vấn cho ứng viên Nguyễn Văn A vào 10:00 sáng mai với anh Hoàng.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_interview",
+    "arguments": {
+      "candidate_name": "Nguyễn Văn A",
+      "datetime_str": "10:00 sáng mai",
+      "interviewer": "anh Hoàng"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "booking_id": "INT-NguyễnVănA-01",
+      "candidate": "Nguyễn Văn A",
+      "datetime": "10:00 sáng mai",
+      "interviewer": "anh Hoàng",
+      "message": "Đã chốt lịch phỏng vấn cho Nguyễn Văn A với anh Hoàng vào 10:00 sáng mai."
+    },
+    "latency_ms": 2036.73
+  },
+  {
+    "step": 2,
+    "query": "Tôi muốn đặt lịch phỏng vấn cho ứng viên Nguyễn Văn A vào 10:00 sáng mai với anh Hoàng.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Đã chốt lịch phỏng vấn cho Nguyễn Văn A với anh Hoàng vào 10:00 sáng mai.",
+    "latency_ms": 10.0
+  },
+  {
+    "step": 1,
+    "query": "Kiểm tra xem vị trí Data Scientist cần những kỹ năng cốt lõi nào. Sau đó, xếp lịch phỏng vấn vòng 1 cho ứng viên Trần Thị B vào 14:00 chiều thứ 6 tuần này với HR Manager Lan Anh.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "get_job_criteria",
+    "arguments": {
+      "job_title": "Data Scientist"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "job_title": "Data Scientist",
+      "data": {
+        "department": "Data",
+        "level": "Junior/Mid",
+        "skills_required": [
+          "Python",
+          "Machine Learning",
+          "SQL",
+          "Pandas"
+        ],
+        "experience": "1+ year",
+        "salary_range": "1200 - 2000 USD"
+      }
+    },
+    "latency_ms": 3996.42
+  },
+  {
+    "step": 2,
+    "query": "Kiểm tra xem vị trí Data Scientist cần những kỹ năng cốt lõi nào. Sau đó, xếp lịch phỏng vấn vòng 1 cho ứng viên Trần Thị B vào 14:00 chiều thứ 6 tuần này với HR Manager Lan Anh.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Dữ liệu trả về: {\"department\": \"Data\", \"level\": \"Junior/Mid\", \"skills_required\": [\"Python\", \"Machine Learning\", \"SQL\", \"Pandas\"], \"experience\": \"1+ year\", \"salary_range\": \"1200 - 2000 USD\"}",
+    "latency_ms": 10.0
+  },
+  {
+    "step": 1,
+    "query": "Hãy tìm tiêu chí tuyển dụng cho vị trí Astronaut (Phi hành gia) tại công ty.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "get_job_criteria",
+    "arguments": {
+      "job_title": "Astronaut"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy tiêu chí cho vị trí 'Astronaut'"
+    },
+    "latency_ms": 1938.57
+  },
+  {
+    "step": 2,
+    "query": "Hãy tìm tiêu chí tuyển dụng cho vị trí Astronaut (Phi hành gia) tại công ty.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Không tìm thấy tiêu chí cho vị trí 'Astronaut'",
     "latency_ms": 10.0
   }
 ]

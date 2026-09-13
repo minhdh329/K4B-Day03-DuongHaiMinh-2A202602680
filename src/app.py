@@ -111,30 +111,39 @@ def run_react_agent(user_query: str, provider, mcp_server: MCPAcademicServer) ->
             
             if not obs_data:
                 print(f"👁️ [Observation từ MCP Server]: {{}}")
-                print(f"⚠️ [CHÚ Ý]: MCP Server trả về kết quả rỗng! Học viên cần hoàn thành TODO 2.1 trong 'src/mcp_server.py'.")
-                final_answer = "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1)."
+                print(f"⚠️ [CHÚ Ý]: MCP Server trả về kết quả rỗng!")
+                final_answer = "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server."
             else:
                 obs_str = json.dumps(obs_data, ensure_ascii=False)
                 print(f"👁️ [Observation từ MCP Server]: {obs_str}")
                 
-                # Tổng hợp Final Answer từ kết quả Observation thực tế
-                if obs_data.get("status") == "SUCCESS":
-                    if "data" in obs_data:
-                        d = obs_data["data"]
-                        final_answer = (
-                            f"Kết quả tra cứu cho sinh viên {obs_data.get('student_id', '')} ({d.get('full_name', '')}): "
-                            f"Lớp {d.get('class', '')}, GPA: {d.get('gpa', '')}, Email: {d.get('email', '')}, "
-                            f"Trạng thái: {d.get('status', '')}, Cố vấn: {d.get('advisor', '')}."
-                        )
-                    elif "message" in obs_data:
+                # --- ĐOẠN NÀY PHẢI ĐƯỢC THỤT LỀ NẰM BÊN TRONG NHÁNH else: ---
+                status = obs_data.get("status", "")
+                
+                if status == "SUCCESS":
+                    if "message" in obs_data:
                         final_answer = obs_data["message"]
+                    elif "data" in obs_data:
+                        d = obs_data["data"]
+                        if "skills" in d:
+                            final_answer = (
+                                f"Thông tin vị trí {obs_data.get('job_title', '')}: "
+                                f"Kỹ năng yêu cầu: {', '.join(d.get('skills', []))}. "
+                                f"Mức lương: {d.get('salary_range', 'Thỏa thuận')}."
+                            )
+                        else:
+                            final_answer = f"Dữ liệu trả về: {json.dumps(d, ensure_ascii=False)}"
                     else:
-                        final_answer = f"Đã hoàn tất xử lý qua MCP Server: {json.dumps(obs_data, ensure_ascii=False)}"
-                elif obs_data.get("status") == "NOT_FOUND":
-                    final_answer = obs_data.get("message", "Không tìm thấy thông tin sinh viên yêu cầu.")
+                        final_answer = f"Đã hoàn tất: {json.dumps(obs_data, ensure_ascii=False)}"
+                        
+                elif status == "NOT_FOUND":
+                    # Nhánh xử lý edge_case khi không tìm thấy JD (như Astronaut)
+                    final_answer = obs_data.get("message", "Không tìm thấy dữ liệu.")
+                    
                 else:
+                    # Bắt các trường hợp lỗi khác
                     final_answer = f"Phản hồi từ công cụ: {json.dumps(obs_data, ensure_ascii=False)}"
-            
+
             trace_logs.append({
                 "step": step,
                 "query": user_query,
@@ -185,7 +194,7 @@ if __name__ == "__main__":
         print("   - Gõ 'exit' hoặc 'quit' để kết thúc phiên trò chuyện.\n")
         while True:
             try:
-                user_input = input("👤 Sinh viên hỏi: ").strip()
+                user_input = input("👤 Ứng viên hỏi: ").strip()
                 if not user_input or user_input.lower() in ["exit", "quit"]:
                     print("👋 Tạm biệt! Kết thúc phiên trò chuyện.")
                     break

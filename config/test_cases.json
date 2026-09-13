@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, bạn có thể giới thiệu quy trình tuyển dụng cơ bản của công ty không?",
+    "expected_behavior": "Chatbot trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tra cứu các tiêu chí tuyển dụng cho vị trí Frontend Developer.",
+    "expected_behavior": "Agent nhận diện nhu cầu tra cứu, tự động phát sinh Tool Call 'get_job_criteria' với vị trí Frontend Developer.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "appointment_booking",
+    "question": "Tôi muốn đặt lịch phỏng vấn cho ứng viên Nguyễn Văn A vào 10:00 sáng mai với anh Hoàng.",
+    "expected_behavior": "Agent tự động phát sinh Tool Call 'schedule_interview' với đúng tên ứng viên, thời gian và người phỏng vấn.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Kiểm tra xem vị trí Data Scientist cần những kỹ năng cốt lõi nào. Sau đó, xếp lịch phỏng vấn vòng 1 cho ứng viên Trần Thị B vào 14:00 chiều thứ 6 tuần này với HR Manager Lan Anh.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct: Tra cứu tiêu chí tuyển dụng của Data Scientist trước, sau đó tiến hành đặt lịch hẹn phỏng vấn.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tìm tiêu chí tuyển dụng cho vị trí Astronaut (Phi hành gia) tại công ty.",
+    "expected_behavior": "Agent nhận kết quả NOT_FOUND từ Tool (vì công ty không tuyển vị trí này) và đưa ra phản hồi lịch sự, chính xác không bịa đặt dữ liệu.",
+    "complexity": "Medium"
+  }
+]
