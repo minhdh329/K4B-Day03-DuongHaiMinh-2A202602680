@@ -30,11 +30,12 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
     "step": 1,
     "query": "Tôi muốn đặt lịch phỏng vấn cho ứng viên Nguyễn Văn A vào 10:00 sáng mai với anh Hoàng.",
     "action_type": "TOOL_EXECUTION",
+    "thought": "Gemini quyết định gọi công cụ 'schedule_interview' với tham số: {\"interviewer\": \"anh Hoàng\", \"datetime_str\": \"10:00 sáng mai\", \"candidate_name\": \"Nguyễn Văn A\"}",
     "tool_name": "schedule_interview",
     "arguments": {
-      "candidate_name": "Nguyễn Văn A",
+      "interviewer": "anh Hoàng",
       "datetime_str": "10:00 sáng mai",
-      "interviewer": "anh Hoàng"
+      "candidate_name": "Nguyễn Văn A"
     },
     "observation": {
       "status": "SUCCESS",
@@ -44,7 +45,7 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
       "interviewer": "anh Hoàng",
       "message": "Đã chốt lịch phỏng vấn cho Nguyễn Văn A với anh Hoàng vào 10:00 sáng mai."
     },
-    "latency_ms": 2036.73
+    "latency_ms": 1921.89
   },
   {
     "step": 2,

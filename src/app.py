@@ -117,7 +117,6 @@ def run_react_agent(user_query: str, provider, mcp_server: MCPAcademicServer) ->
                 obs_str = json.dumps(obs_data, ensure_ascii=False)
                 print(f"👁️ [Observation từ MCP Server]: {obs_str}")
                 
-                # --- ĐOẠN NÀY PHẢI ĐƯỢC THỤT LỀ NẰM BÊN TRONG NHÁNH else: ---
                 status = obs_data.get("status", "")
                 
                 if status == "SUCCESS":
@@ -125,10 +124,11 @@ def run_react_agent(user_query: str, provider, mcp_server: MCPAcademicServer) ->
                         final_answer = obs_data["message"]
                     elif "data" in obs_data:
                         d = obs_data["data"]
-                        if "skills" in d:
+                        if "skills" in d or "skills_required" in d:
+                            skills = d.get("skills") or d.get("skills_required") or []
                             final_answer = (
                                 f"Thông tin vị trí {obs_data.get('job_title', '')}: "
-                                f"Kỹ năng yêu cầu: {', '.join(d.get('skills', []))}. "
+                                f"Kỹ năng yêu cầu: {', '.join(skills)}. "
                                 f"Mức lương: {d.get('salary_range', 'Thỏa thuận')}."
                             )
                         else:
@@ -137,17 +137,17 @@ def run_react_agent(user_query: str, provider, mcp_server: MCPAcademicServer) ->
                         final_answer = f"Đã hoàn tất: {json.dumps(obs_data, ensure_ascii=False)}"
                         
                 elif status == "NOT_FOUND":
-                    # Nhánh xử lý edge_case khi không tìm thấy JD (như Astronaut)
                     final_answer = obs_data.get("message", "Không tìm thấy dữ liệu.")
                     
                 else:
-                    # Bắt các trường hợp lỗi khác
                     final_answer = f"Phản hồi từ công cụ: {json.dumps(obs_data, ensure_ascii=False)}"
 
+            # 🔥 BỔ SUNG "thought": thought VÀO ĐÂY ĐỂ ĐỦ 3 BƯỚC THOUGHT -> ACTION -> OBSERVATION
             trace_logs.append({
                 "step": step,
                 "query": user_query,
                 "action_type": "TOOL_EXECUTION",
+                "thought": thought,
                 "tool_name": tool_name,
                 "arguments": arguments,
                 "observation": obs_data,
@@ -188,9 +188,8 @@ if __name__ == "__main__":
     if "--interactive" in sys.argv:
         print("🎮 [INTERACTIVE MODE] Trò chuyện trực tiếp với ReAct Agent:")
         print("💡 Gợi ý câu hỏi thử nghiệm:")
-        print("   - Câu hỏi chung: 'Quy chế học vụ VinUni yêu cầu bao nhiêu tín chỉ?'")
-        print("   - Tra cứu học vụ: 'Hãy tra cứu thông tin học vụ của sinh viên SV2026001'")
-        print("   - Đặt lịch hẹn: 'Đặt lịch hẹn tư vấn cho SV2026001 vào 14:00 ngày 15/09/2026'")
+        print("   - Tra cứu tuyển dụng: 'Hãy tra cứu các tiêu chí tuyển dụng cho vị trí Frontend Developer'")
+        print("   - Đặt lịch phỏng vấn: 'Đặt lịch phỏng vấn cho Nguyễn Văn A vào 10:00 sáng mai với anh Hoàng'")
         print("   - Gõ 'exit' hoặc 'quit' để kết thúc phiên trò chuyện.\n")
         while True:
             try:
