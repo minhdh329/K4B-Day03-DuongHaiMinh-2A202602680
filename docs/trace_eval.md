@@ -45,6 +45,14 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
       "message": "Đã chốt lịch phỏng vấn cho Nguyễn Văn A với anh Hoàng vào 10:00 sáng mai."
     },
     "latency_ms": 2036.73
+  },
+  {
+    "step": 2,
+    "query": "Tôi muốn đặt lịch phỏng vấn cho ứng viên Nguyễn Văn A vào 10:00 sáng mai với anh Hoàng.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Đã chốt lịch phỏng vấn cho Nguyễn Văn A với anh Hoàng vào 10:00 sáng mai.",
+    "latency_ms": 10.0
   }
 ]
 ```
